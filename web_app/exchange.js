@@ -103,6 +103,9 @@ async function swapTokensForETH(amountToken, maxSlippagePct) {
 
 async function swapETHForTokens(amountEth, maxSlippagePct) {
     /** TODO: ADD YOUR CODE HERE **/
+    const amountEthToSend = ethers.utils.parseEther(amountEth)
+    await exchange_contract.connect(provider.getSigner(defaultAccount)).swapETHForTokens({ value: amountEthToSend});
+
 }
 
 // =============================================================================
