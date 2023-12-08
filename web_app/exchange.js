@@ -85,12 +85,35 @@ async function getPoolState() {
 /*** ADD LIQUIDITY ***/
 async function addLiquidity(amountEth, maxSlippagePct) {
     /** TODO: ADD YOUR CODE HERE **/
-}
+address payable contractAddress = payable(address(this));
+        contractAddress.transfer(msg.value);
+        eth_reserves += msg.value;
 
-/*** REMOVE LIQUIDITY ***/
-async function removeLiquidity(amountEth, maxSlippagePct) {
-    /** TODO: ADD YOUR CODE HERE **/
-}
+        amountTokens = msg.value * token_reserves / eth_reserves;
+        token.transferFrom(msg.sender, address(this), amountTokens);
+        token_reserves += amountTokens;
+
+        k = eth_reserves * token_reserves;
+        
+    }
+
+
+    // Function removeLiquidity: Removes liquidity given the desired amount of ETH to remove.
+    // You can change the inputs, or the scope of your function, as needed.
+    function removeLiquidity(uint amountETH)
+        public 
+        payable
+    {
+        /******* TODO: Implement this function *******/
+        msg.sender.transfer(amountETH);
+        eth_reserves -= amountETH;
+
+        amountTokens = amountETH * token_reserves / eth_reserves;
+        token.transferFrom(address(this), msg.sender, amountTokens);
+        token_reserves -= amountTokens;
+
+        k = eth_reserves * token_reserves;
+    }
 
 async function removeAllLiquidity(maxSlippagePct) {
     /** TODO: ADD YOUR CODE HERE **/
